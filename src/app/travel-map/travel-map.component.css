@@ -11,11 +11,3 @@
   height: 100%;
   width: 100%;
 }
-
-.esri-popup__main-container {
-  max-height: 60%;
-  min-height: 350px;
-  max-width: 400px;
-  min-width: 350px;
-
-}

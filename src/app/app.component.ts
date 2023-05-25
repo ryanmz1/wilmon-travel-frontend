@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'wilmon-travel-frontend-angular';
+
+  // public handleModeChoose($event: any) {
+  //   console.log($event);
+  // }
 }
