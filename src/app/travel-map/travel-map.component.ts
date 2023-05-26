@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild,ElementRef } from '@angular/core';
-import {WmMapService} from "../wm-map.service";
+import {WmMapService} from "../services/wm-map.service";
 
 @Component({
   selector: 'app-travel-map',

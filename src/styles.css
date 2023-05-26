@@ -8,3 +8,48 @@ body {
   height: 100%;
   width: 100%;
 }
+
+/* .esri-popup__main-container {
+  max-height: 400px;
+  min-height: 400px;
+  max-width: 400px;
+  min-width: 350px;
+} */
+.esri-view-height-less-than-medium .esri-popup__main-container {
+  max-height: 500px !important;
+}
+
+/* .esri-view-surface--inset-outline:focus::after {
+  outline: none !important;
+} */
+.esri-view .esri-view-surface--inset-outline:focus::after {
+  outline: none !important;
+}
+
+.block-right {
+  display: block;
+  text-align: right;
+}
+
+.well {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  /* .box-shadow(inset 0 1px 1px rgba(0,0,0,.05)); */
+  /* blockquote {
+    border-color: #ddd;
+    border-color: rgba(0,0,0,.15);
+  } */
+}
+
+.well .box-shadow {
+  inset: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.well-sm {
+  padding: 9px;
+  border-radius: 3px;
+}
