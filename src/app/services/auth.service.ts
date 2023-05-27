@@ -19,7 +19,7 @@ export class AuthService {
 
   public fetchAuthToken(): Promise<any> {
     return new Promise((resolve, reject)=> {
-      const cognitoUser = this.userPool.getCurrentUser();
+      const cognitoUser = this.getCurrentUser();
       if (cognitoUser) {
         cognitoUser.getSession((err: Error, session: any) => {
           if (err) {
@@ -36,7 +36,7 @@ export class AuthService {
     });
   }
   
-  public signin(email: string, password: string, onSuccess: any, onFailure: any) {
+  public login(email: string, password: string, onSuccess: any, onFailure: any) {
     const authenticationDetails = new AuthenticationDetails(
       {
         Username: this.toUsername(email),
@@ -75,4 +75,8 @@ export class AuthService {
   private toUsername(email: string) {
     return email.replace('@', '-at-');
   }
+
+  private getCurrentUser() {
+    return this.userPool.getCurrentUser();
+}
 }
