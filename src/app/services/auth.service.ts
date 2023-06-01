@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { CognitoAuthService } from "./cognito-auth.service";
-import { MessageService } from "../services/message.service";
+import { EventBusService } from "./event-bus.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private cognitoAuthService: CognitoAuthService) { }
+  constructor(private cognitoAuthService: CognitoAuthService,
+    private eventBusService: EventBusService) { }
 
   public fetchAuthToken(): Promise<any> {
     return this.cognitoAuthService.fetchAuthToken();
@@ -23,6 +24,7 @@ export class AuthService {
 
   public signOut() {
     this.cognitoAuthService.signOut();
+    window.location.reload();
   }
 
   public signUp(email: string, password: string, onSuccess: any, onFailure: any) {

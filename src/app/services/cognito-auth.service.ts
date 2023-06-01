@@ -60,7 +60,6 @@ export class CognitoAuthService {
   }
   
   public login(email: string, password: string, onSuccess: any, onFailure: any) {
-    // this.msgService.sendMessage('loading');
     const authenticationDetails = new AuthenticationDetails(
       {
         Username: this.toUsername(email),
