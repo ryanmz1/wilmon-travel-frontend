@@ -12,7 +12,7 @@ export class WmTravelService {
 
   private API_URL = api.invokeUrl + '/travels';
 
-  public getTravels(authToken: string) {
+  public getUserTravels(authToken: string) {
     return this.get4Api(this.API_URL, authToken);
   }
 

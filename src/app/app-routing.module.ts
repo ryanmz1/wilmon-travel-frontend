@@ -3,8 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { TravelMapComponent } from './travel-map/travel-map.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'index', pathMatch: 'full' },
-  { path: 'index', component: TravelMapComponent },
+  {
+    path: 'auth',
+    loadChildren: () => import('./user-auth/user-auth.module').then(m => m.UserAuthModule)
+  },
+  {
+    path: '',
+    redirectTo: '',
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({

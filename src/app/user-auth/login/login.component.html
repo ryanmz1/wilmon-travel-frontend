@@ -1,0 +1,51 @@
+
+<div class="modal" #loginModal>
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Login</p>
+      <!-- <button class="delete" aria-label="close"></button> -->
+    </header>
+    <section class="modal-card-body">
+      <div class="well well-sm">
+        <!-- <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> -->
+        <span class="icon-text">
+          <span class="icon has-text">
+            <i class="fas fa-info-circle"></i>
+          </span>
+          <span> Have no account yet? <a #signupLink href="javascript:void(0)" ><b>Sign up</b></a> now.</span>
+        </span>        
+      </div>
+      <form [formGroup]="loginForm">
+        <div class="field">
+          <label class="label" for="emailLogin">Email address</label>
+          <div class="control has-icons-left has-icons-right">
+            <input #emailLogin class="input" type="email" placeholder="Enter email" required formControlName="email">
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+            <!-- <span class="icon is-small is-right">
+              <i class="fas fa-exclamation-triangle"></i>
+            </span> -->
+          </div>
+          <!-- <p class="help is-danger">This email is invalid</p> -->
+          <p class="help">We'll never share your email with anyone else.</p>
+        </div>
+        <div class="field">
+          <label class="label" for="passwordLogin">Password</label>
+          <div class="control has-icons-left">
+            <input #passwordLogin class="input" type="password" placeholder="Password" required formControlName="password">
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </div>
+        </div>
+        <!-- <button type="submit" class="button is-success">Sign in</button> -->
+      </form>
+    </section>
+    <footer class="modal-card-foot block-right">
+      <button type="submit" class="button is-success" (click)="onLogin()">Login</button>
+      <button class="button" (click)="on2VisitorMode()">Go to Visitor Mode</button>
+    </footer>
+  </div>
+</div>
