@@ -1,10 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from "@angular/router";
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { EventBusService } from 'src/app/services/event-bus.service';
 import { WmMapService } from 'src/app/services/wm-map.service';
 import { WmTravelService } from 'src/app/services/wm-travel.service';
-import { TRAVELS } from "../../visitorTravels";
 
 @Component({
   selector: 'app-login',
@@ -24,16 +24,11 @@ export class LoginComponent implements OnInit {
     private eventBusService: EventBusService,
     private authService: AuthService,
     private travelService: WmTravelService,
-    private mapService: WmMapService) { }
+    private mapService: WmMapService,
+    private router: Router) { }
 
   ngOnInit(): void {
-    this.eventBusService.on('loginModal', (payload: any) => {
-      if (payload.show) {
-        this.openLoginModal();
-      } else if (!payload.show) {
-        this.closeLoginModal();
-      }
-    });
+    this.openLoginModal();
   }
 
   public openLoginModal() {
@@ -65,9 +60,11 @@ export class LoginComponent implements OnInit {
 
   public on2VisitorMode() {
     console.log('go to visitor mode');
-    this.eventBusService.emit({type:'loginModal',payload:{show:false}});
-    this.mapService.renderTravel(TRAVELS);
-    // this._visitorMode=true;
+    // this.eventBusService.emit({type:'loginModal',payload:{show:false}});
+    this.closeLoginModal();
+    // this.authService.VISITOR_MODE=true;
+    this.router.navigateByUrl('');
+    this.eventBusService.emit({type:'visitorMode'});
   }
 
 }

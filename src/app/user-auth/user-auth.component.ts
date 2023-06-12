@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
+import { Router } from "@angular/router";
 import { WmMapService } from "../services/wm-map.service";
 import { AuthService } from "../services/auth.service";
 import { EventBusService } from "../services/event-bus.service";
@@ -15,7 +16,8 @@ export class UserAuthComponent implements OnInit {
   constructor(private mapService: WmMapService,
     private authService: AuthService,
     private eventBusService: EventBusService,
-    private travelService: WmTravelService) { }
+    private travelService: WmTravelService,
+    private router: Router) { }
 
   @ViewChild('modeModal',{ static: true })
   private modeEl!: ElementRef;
@@ -26,7 +28,10 @@ export class UserAuthComponent implements OnInit {
 
   private _visitorMode=false;
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    console.log('user-auth init...');
+    this.openModeModal();
+  }
 
   public openModeModal() {
     this.modeEl.nativeElement.classList.add('is-active');
@@ -40,13 +45,13 @@ export class UserAuthComponent implements OnInit {
     if (mode === 'visitor') {
       console.log('choose visitor mode');
       this.closeModeModal();
-      this.mapService.renderTravel(TRAVELS);
-      this._visitorMode=true;
-      // this.modeNotifier.emit('visitorMode');
+      this.router.navigateByUrl('');
+      this.eventBusService.emit({type:'visitorMode'});
     } else if (mode === 'user') {
       console.log('choose user mode');
       this.closeModeModal();
-      this.eventBusService.emit({type:'loginModal',payload:{show:true}});
+      // this.eventBusService.emit({type:'loginModal',payload:{show:true}});
+      this.router.navigateByUrl('/auth/login');
       this._visitorMode=false;
     }
   }
