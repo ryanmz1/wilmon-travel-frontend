@@ -24,7 +24,7 @@ export class WmMapService {
     },
   });
   private _wilmonSymbol = new PictureMarkerSymbol({
-    url: 'assets/images/pika-icon.png',
+    url: '/assets/images/pika-icon.png',
     width: '25px',
     height: '25px',
   });

@@ -6,9 +6,9 @@ import { EventBusService } from "./event-bus.service";
   providedIn: 'root'
 })
 export class AuthService {
+  // public VISITOR_MODE = false;
 
-  constructor(private cognitoAuthService: CognitoAuthService,
-    private eventBusService: EventBusService) { }
+  constructor(private cognitoAuthService: CognitoAuthService,) { }
 
   public fetchAuthToken(): Promise<any> {
     return this.cognitoAuthService.fetchAuthToken();

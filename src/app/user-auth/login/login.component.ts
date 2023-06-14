@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
       this.authService.fetchAuthToken().then((token) => {
         console.log(token);
         this.closeLoginModal();
+        this.router.navigateByUrl('');
         this.eventBusService.emit({type:'toggleLogin', payload:{login:true}});
         this.travelService.getUserTravels(token).subscribe((res: any)=>{
           this.mapService.renderTravel(res.data);
