@@ -1,1 +1,100 @@
-<p>sign-up works!</p>
+<div class="modal" #signUpModal>
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">SignUp</p>
+      <!-- <button class="delete" aria-label="close"></button> -->
+    </header>
+    <section class="modal-card-body">
+      <div class="well well-sm">
+        <span class="icon-text">
+          <span class="icon has-text">
+            <i class="fas fa-info-circle"></i>
+          </span>
+          <span> Just want to <a href="javascript:void(0)" (click)="toVerify()"><b>Verify</b></a> now.</span>
+        </span>        
+      </div>
+      <form [formGroup]="signUpForm">
+        <div class="field">
+          <label class="label" for="emailSignUp">Email address</label>
+          <div class="control has-icons-left has-icons-right">
+            <input id="emailSignUp" class="input" type="email" placeholder="Enter email" formControlName="email">
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+            <!-- <span class="icon is-small is-right" >
+              <i class="fas fa-exclamation-triangle"></i>
+            </span> -->
+          </div>
+          <p class="help is-danger" *ngIf="email?.errors?.['email']">This email is invalid</p>
+          <p class="help">We'll never share your email with anyone else.</p>
+        </div>
+        <div class="field">
+          <label class="label" for="passwordSignUp">Password</label>
+          <div class="control has-icons-left">
+            <input id="passwordSignUp" class="input" type="password" placeholder="Password" formControlName="password">
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </div>
+          <p class="help is-danger" *ngIf="password?.errors?.['minlength']">Password must have 8 characters!</p>
+        </div>
+        <div class="field">
+          <label class="label" for="passwordSignUp2">Password Confirmation</label>
+          <div class="control has-icons-left">
+            <input id="passwordSignUp2" class="input" type="password" placeholder="Confirm Password" required formControlName="passwordConfirm">
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </div>
+          <p class="help is-danger" *ngIf="signUpForm.errors?.['password mismatch']">Passwords mismatch!</p>
+        </div>
+        <!-- <button type="submit" class="button is-success">Sign in</button> -->
+      </form>
+    </section>
+    <footer class="modal-card-foot block-right">
+      <button type="submit" class="button is-success" (click)="onSignUp()">Let's Wilmon</button>
+      <button class="button" routerLink="/auth">Back</button>
+    </footer>
+  </div>
+</div>
+<div class="modal" #verifyModal>
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Verify</p>
+      <!-- <button class="delete" aria-label="close"></button> -->
+    </header>
+    <section class="modal-card-body">
+      <div class="notification" #notification>
+        <!-- <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> -->
+        <p class="block">
+          <span class="icon-text">
+            <span class="icon has-text">
+              <i class="fas fa-info-circle"></i>
+            </span>
+            <span>{{notifiContent.title}}</span>
+          </span>
+          {{notifiContent.message}}
+        </p>
+      </div>
+      <form [formGroup]="verifyForm">
+        <div class="field">
+          <label for="emailVerify">Email address</label>
+          <div class="control">
+            <input id="emailVerify" class="input" type="email" placeholder="Email" required formControlName="email">
+          </div>
+        </div>
+        <div class="field">
+          <label for="codeVerify">Verification Code</label>
+          <div class="control">
+            <input id="codeVerify" class="input" type="text" placeholder="Verification Code" required formControlName="code">
+          </div>
+        </div>
+      </form>
+    </section>
+    <footer class="modal-card-foot block-right">
+      <button type="submit" class="button is-success" (click)="onVerify()">Verify</button>
+    </footer>
+  </div>
+</div>
