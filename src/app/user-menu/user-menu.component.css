@@ -3,6 +3,15 @@
   right: 10px;
   top: 10px;
   z-index: 100;
-  width: 275px;
+  width: 245px;
   background: transparent;
+}
+
+.panel-body {
+  background-color: #fff;
+}
+
+.notifi {
+  margin-bottom: 0;
+  /* font-size: 14px; */
 }
