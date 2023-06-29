@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild, Renderer2 } from '@angular/core';
 import { AbstractControl, FormBuilder,FormControl,ValidationErrors,Validators } from '@angular/forms';
 import { Router } from "@angular/router";
-import { AuthService } from "../../services/auth.service";
+import { AuthStoreService } from "../../services/auth-store.service";
 
 @Component({
   selector: 'app-sign-up',
@@ -33,7 +33,7 @@ export class SignUpComponent implements OnInit {
   }
 
   constructor(private formBuilder: FormBuilder,
-    private authService: AuthService,
+    private authStore: AuthStoreService,
     private router: Router,
     private render: Renderer2) { }
 
@@ -69,7 +69,7 @@ export class SignUpComponent implements OnInit {
     passwordConfirm = typeof passwordConfirm === 'string'? passwordConfirm : '';
     console.log(email,password,passwordConfirm);
     if (this.signUpForm.valid) {
-      this.authService.signUp(email, password, (res: any) => {
+      this.authStore.signUp(email, password, (res: any) => {
         const cognitoUser = res.user;
         console.log('user name is ' + cognitoUser.getUsername());
         this.signUpForm.reset();
@@ -95,7 +95,7 @@ export class SignUpComponent implements OnInit {
     email = typeof email === 'string'? email : '';
     code = typeof code === 'string'? code : '';
     console.log(email, code);
-    this.authService.verify(email, code, (res: any) => {
+    this.authStore.verify(email, code, (res: any) => {
       this.onSuccessStyle();
       setTimeout(() => {
         this.verifyForm.reset();

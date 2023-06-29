@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { Router } from "@angular/router";
 import { WmMapService } from "../services/wm-map.service";
-import { AuthService } from "../services/auth.service";
+import { AuthStoreService } from "../services/auth-store.service";
 import { EventBusService } from "../services/event-bus.service";
 import { WmTravelService } from "../services/wm-travel.service";
 import { TRAVELS } from "../visitorTravels";
@@ -14,7 +14,7 @@ import { TRAVELS } from "../visitorTravels";
 export class UserAuthComponent implements OnInit {
 
   constructor(private mapService: WmMapService,
-    private authService: AuthService,
+    private authStore: AuthStoreService,
     private eventBusService: EventBusService,
     private travelService: WmTravelService,
     private router: Router) { }

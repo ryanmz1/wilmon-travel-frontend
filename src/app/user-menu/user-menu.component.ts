@@ -1,7 +1,7 @@
 import { Component, OnInit,Input,ElementRef, ViewChild,Renderer2 } from '@angular/core';
 import { Router } from "@angular/router";
 import { EventBusService } from "../services/event-bus.service";
-import { AuthService } from '../services/auth.service';
+import { AuthStoreService } from '../services/auth-store.service';
 
 @Component({
   selector: 'app-user-menu',
@@ -18,7 +18,7 @@ export class UserMenuComponent implements OnInit {
 
   constructor(private eventBusService: EventBusService,
     private render: Renderer2,
-    private authService: AuthService,
+    private authService: AuthStoreService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -63,7 +63,8 @@ export class UserMenuComponent implements OnInit {
   }
 
   public handleSignout() {
-    this.authService.signOut();
+    // this.authService.signOut();
+    this.authService.logout();
   }
 
 }

@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from "@angular/router";
 import { FormBuilder } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthStoreService } from 'src/app/services/auth-store.service';
 import { EventBusService } from 'src/app/services/event-bus.service';
 import { WmMapService } from 'src/app/services/wm-map.service';
 import { WmTravelService } from 'src/app/services/wm-travel.service';
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private eventBusService: EventBusService,
-    private authService: AuthService,
+    private authService: AuthStoreService,
     private travelService: WmTravelService,
     private mapService: WmMapService,
     private router: Router) { }
@@ -45,16 +45,16 @@ export class LoginComponent implements OnInit {
     password = typeof password === 'string'? password : '';
     this.authService.login(email,password,()=> {
       this.eventBusService.emit({type:'loading'});
-      this.authService.fetchAuthToken().then((token) => {
-        console.log(token);
-        this.closeLoginModal();
-        this.router.navigateByUrl('');
-        this.eventBusService.emit({type:'toggleLogin', payload:{login:true}});
-        this.travelService.getUserTravels(token).subscribe((res: any)=>{
-          this.mapService.renderTravel(res.data);
-          this.eventBusService.emit({type:'loadingDone'});
-        });
-      });
+      // this.authService.fetchAuthToken().then((token) => {
+      //   console.log(token);
+      //   this.closeLoginModal();
+      //   this.router.navigateByUrl('');
+      //   this.eventBusService.emit({type:'toggleLogin', payload:{login:true}});
+      //   this.travelService.getUserTravels().subscribe((res: any)=>{
+      //     this.mapService.renderTravel(res.data);
+      //     this.eventBusService.emit({type:'loadingDone'});
+      //   });
+      // });
     }, (err: Error) => alert(err));
     this.loginForm.reset();
   }

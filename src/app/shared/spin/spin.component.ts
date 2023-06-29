@@ -1,4 +1,5 @@
 import { Component, OnInit,ViewChild,ElementRef,Input } from '@angular/core';
+import { EventBusService } from "../../services/event-bus.service";
 
 @Component({
   selector: 'app-spin',
@@ -9,18 +10,24 @@ export class SpinComponent implements OnInit {
 
   @ViewChild('spinModal', {static: true})
   private spinModal!: ElementRef;
-  @Input()  
-  public set spinOpen(v: boolean) {
-    if (v) {
-      this.openSpinModal();
-    } else {
-      this.closeSpinModal();
-    }
-  }
+  // @Input('spinOpen')
+  // public set spinOpen(v: boolean) {
+  //   if (v) {
+  //     this.openSpinModal();
+  //   } else {
+  //     this.closeSpinModal();
+  //   }
+  // }
   
-  constructor() { }
+  constructor(private eventBusService: EventBusService) { }
 
   ngOnInit(): void {
+    this.eventBusService.on('loading', (payload: any) => {
+      this.openSpinModal();
+    });
+    this.eventBusService.on('loadingDone', (payload: any) => {
+      this.closeSpinModal();
+    });
   }
 
   public openSpinModal() {

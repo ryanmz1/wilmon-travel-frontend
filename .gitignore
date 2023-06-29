@@ -41,5 +41,10 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# static assets
+src/assets
+visitorTravels.ts
+
 # secrets
 /src/environments/envConfig.ts
+auth0_config.json
