@@ -20,9 +20,9 @@
       </div>
       <div class="dropdown-menu" id="dropdown-menu" role="menu">
         <div class="dropdown-content">
-          <a href="javascript:void(0)" class="dropdown-item" (click)="handleSignUp()" #signUpLink>Sign up</a>
-          <a href="javascript:void(0)" class="dropdown-item" (click)="handleLogin()" #loginLink>Log in</a>
-          <a href="javascript:void(0)" class="dropdown-item" (click)="handleSignout()" #signoutLink>Sign out</a>
+          <!-- <a *ngIf="!(authStoreService.auth.isAuthenticated$ | async)" href="javascript:void(0)" class="dropdown-item" (click)="handleSignUp()" #signUpLink>Sign up</a> -->
+          <a *ngIf="!(authStoreService.auth.isAuthenticated$ | async)" href="javascript:void(0)" class="dropdown-item" (click)="handleLogin()" #loginLink>Log in</a>
+          <a *ngIf="authStoreService.auth.isAuthenticated$ | async" href="javascript:void(0)" class="dropdown-item" (click)="handleSignout()" #signoutLink>Sign out</a>
         </div>
       </div>
     </div>

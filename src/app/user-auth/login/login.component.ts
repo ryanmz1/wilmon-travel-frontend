@@ -40,23 +40,23 @@ export class LoginComponent implements OnInit {
   }
 
   public onLogin() {
-    let { email, password } = this.loginForm.value;
-    email = typeof email === 'string'? email : '';
-    password = typeof password === 'string'? password : '';
-    this.authService.login(email,password,()=> {
-      this.eventBusService.emit({type:'loading'});
-      // this.authService.fetchAuthToken().then((token) => {
-      //   console.log(token);
-      //   this.closeLoginModal();
-      //   this.router.navigateByUrl('');
-      //   this.eventBusService.emit({type:'toggleLogin', payload:{login:true}});
-      //   this.travelService.getUserTravels().subscribe((res: any)=>{
-      //     this.mapService.renderTravel(res.data);
-      //     this.eventBusService.emit({type:'loadingDone'});
-      //   });
-      // });
-    }, (err: Error) => alert(err));
-    this.loginForm.reset();
+  //   let { email, password } = this.loginForm.value;
+  //   email = typeof email === 'string'? email : '';
+  //   password = typeof password === 'string'? password : '';
+  //   this.authService.login(email,password,()=> {
+  //     this.eventBusService.emit({type:'loading'});
+  //     // this.authService.fetchAuthToken().then((token) => {
+  //     //   console.log(token);
+  //     //   this.closeLoginModal();
+  //     //   this.router.navigateByUrl('');
+  //     //   this.eventBusService.emit({type:'toggleLogin', payload:{login:true}});
+  //     //   this.travelService.getUserTravels().subscribe((res: any)=>{
+  //     //     this.mapService.renderTravel(res.data);
+  //     //     this.eventBusService.emit({type:'loadingDone'});
+  //     //   });
+  //     // });
+  //   }, (err: Error) => alert(err));
+  //   this.loginForm.reset();
   }
 
   public on2VisitorMode() {

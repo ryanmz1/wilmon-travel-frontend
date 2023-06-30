@@ -23,7 +23,7 @@ export class TravelMapComponent implements OnInit,OnDestroy {
   initializeMap() {
     const container = this.mapEl.nativeElement;
     this.mapService.initializeMap(container).then(() => {
-      console.log('map loaded');
+      console.log('base map ready');
     }).catch((reason) => {
       console.log(reason);
     });

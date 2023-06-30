@@ -18,24 +18,24 @@ export class UserMenuComponent implements OnInit {
 
   constructor(private eventBusService: EventBusService,
     private render: Renderer2,
-    private authService: AuthStoreService,
+    public authStoreService: AuthStoreService,
     private router: Router) { }
 
   ngOnInit(): void {
     this.eventBusService.on('toggleLogin', (payload: any) => {
-      if (payload.login) {
-        this.setSignOut();
-      } else if (!payload.login) {
-        this.setLoginAndSignUp();
-      }
+      // if (payload.login) {
+      //   this.setSignOut();
+      // } else if (!payload.login) {
+      //   this.setLoginAndSignUp();
+      // }
     });
   }
 
-  public setSignOut() {
-    this.render.setStyle(this.loginLink.nativeElement, 'display', 'none');
-    this.render.setStyle(this.signUpLink.nativeElement, 'display', 'none');
-    this.render.removeStyle(this.signoutLink.nativeElement, 'display');
-  }
+  // public setSignOut() {
+  //   this.render.setStyle(this.loginLink.nativeElement, 'display', 'none');
+  //   this.render.setStyle(this.signUpLink.nativeElement, 'display', 'none');
+  //   this.render.removeStyle(this.signoutLink.nativeElement, 'display');
+  // }
 
   // public removeSignUp() {
   //   this.render.setStyle(this.signUpLink.nativeElement, 'display', 'none');
@@ -47,24 +47,26 @@ export class UserMenuComponent implements OnInit {
   //   this.render.removeStyle(this.signoutLink.nativeElement, 'display');
   // }
 
-  public setLoginAndSignUp() {
-    this.render.setStyle(this.signoutLink.nativeElement, 'display', 'none');
-    this.render.removeStyle(this.signUpLink.nativeElement, 'display');
-    this.render.removeStyle(this.loginLink.nativeElement, 'display');
-  }
+  // public setLoginAndSignUp() {
+  //   this.render.setStyle(this.signoutLink.nativeElement, 'display', 'none');
+  //   this.render.removeStyle(this.signUpLink.nativeElement, 'display');
+  //   this.render.removeStyle(this.loginLink.nativeElement, 'display');
+  // }
 
   public handleSignUp() {
-    this.router.navigateByUrl('/auth/signup');
+    // this.router.navigateByUrl('/auth/signup');
+    this.authStoreService.signUp();
   }
 
   public handleLogin() {
     // this.eventBusService.emit({type:'loginModal',payload:{show:true}});
-    this.router.navigateByUrl('/auth/login');
+    // this.router.navigateByUrl('/auth/login');
+    this.authStoreService.login();
   }
 
   public handleSignout() {
     // this.authService.signOut();
-    this.authService.logout();
+    this.authStoreService.logout();
   }
 
 }

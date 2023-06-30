@@ -69,15 +69,15 @@ export class SignUpComponent implements OnInit {
     passwordConfirm = typeof passwordConfirm === 'string'? passwordConfirm : '';
     console.log(email,password,passwordConfirm);
     if (this.signUpForm.valid) {
-      this.authStore.signUp(email, password, (res: any) => {
-        const cognitoUser = res.user;
-        console.log('user name is ' + cognitoUser.getUsername());
-        this.signUpForm.reset();
-        this.closeSignUpModal();
-        this.openVerifyModal();
-      }, (error: Error)=>{
-        window.alert(error);
-      });
+      // this.authStore.signUp(email, password, (res: any) => {
+      //   const cognitoUser = res.user;
+      //   console.log('user name is ' + cognitoUser.getUsername());
+      //   this.signUpForm.reset();
+      //   this.closeSignUpModal();
+      //   this.openVerifyModal();
+      // }, (error: Error)=>{
+      //   window.alert(error);
+      // });
     } else {
       window.alert(this.signUpForm.errors);
     }
@@ -95,16 +95,16 @@ export class SignUpComponent implements OnInit {
     email = typeof email === 'string'? email : '';
     code = typeof code === 'string'? code : '';
     console.log(email, code);
-    this.authStore.verify(email, code, (res: any) => {
-      this.onSuccessStyle();
-      setTimeout(() => {
-        this.verifyForm.reset();
-        this.closeVerifyModal();
-        this.router.navigateByUrl('/auth/login');
-      }, 1500);
-    }, (error: Error) => {
-      window.alert(error);
-    });
+    // this.authStore.verify(email, code, (res: any) => {
+    //   this.onSuccessStyle();
+    //   setTimeout(() => {
+    //     this.verifyForm.reset();
+    //     this.closeVerifyModal();
+    //     this.router.navigateByUrl('/auth/login');
+    //   }, 1500);
+    // }, (error: Error) => {
+    //   window.alert(error);
+    // });
   }
 
   private passwordMatchValidator(control: AbstractControl): ValidationErrors | null {

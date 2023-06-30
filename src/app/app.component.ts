@@ -31,11 +31,25 @@ export class AppComponent {
     private authStore: AuthStoreService) {}
 
   ngOnInit() {
-    this.authService.isAuthenticated$.subscribe((res) => {
-      if (res) {
+    // this.authService.handleRedirectCallback(window.location.origin).subscribe((res) => {
+    //   console.log(res);
+    // });
+    // if (window.location.search.includes("code=") &&
+    //   window.location.search.includes("state=")) {
+    //     this.authService.handleRedirectCallback().subscribe((res) => {
+    //       console.log(res);
+    //     });
+    //   }
+    this.authService.isAuthenticated$.subscribe((isAuthenticated) => {
+      if (isAuthenticated) {
         console.log('loggedin');
         this.eventBusService.emit({type:'loading'});
         this.eventBusService.emit({type:'toggleLogin', payload:{login:true}});
+        // console.log(window.location.href);
+
+        // if (window.location.href !== window.location.origin) {
+          
+        // }
         this.authService.idTokenClaims$.subscribe((tokenClaims) => {
           this.authStore.authToken = tokenClaims?.__raw;
           this.travelService.getUserTravels().subscribe((res: any)=>{
@@ -45,6 +59,7 @@ export class AppComponent {
           });
         });
       } else {
+        console.log('no auth...');
         this.eventBusService.emit({type:'toggleLogin', payload:{login:false}});
         this.router.navigateByUrl('/auth');
       }
