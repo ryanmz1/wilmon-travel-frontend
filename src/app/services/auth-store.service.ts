@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
 import { AuthService } from "@auth0/auth0-angular";
-import { CognitoAuthService } from "./cognito-auth.service";
 import { EventBusService } from "./event-bus.service";
 import { DOCUMENT } from '@angular/common';
 import { environment as env } from "../../environments/environment";
@@ -12,32 +11,19 @@ export class AuthStoreService {
   // public VISITOR_MODE = false;
   public authToken: string | undefined;
 
-  constructor(private cognitoAuthService: CognitoAuthService,
+  constructor(
     public auth: AuthService,
     @Inject(DOCUMENT) private doc: Document) { }
 
-  // public fetchAuthToken(): Promise<any> {
-  //   return this.cognitoAuthService.fetchAuthToken();
-  // }
-
-  login(): void {
+  public login(): void {
     // Call this to redirect the user to the login page
     this.auth.loginWithPopup().subscribe(() => {
       // Make sure back to the callback url
       window.location.href = env.auth.authorizationParams.redirect_uri;
     });
   }
-  
-  // public verify(email: string, code: string, onSuccess: any, onFailure: any) {
-  //   this.cognitoAuthService.verify(email, code, onSuccess, onFailure);
-  // }
 
-  // public signOut() {
-  //   this.cognitoAuthService.signOut();
-  //   window.location.reload();
-  // }
-
-  logout(): void {
+  public logout(): void {
     // Call this to redirect the user to the login page
     this.auth.logout({ 
       logoutParams: { 

@@ -45,13 +45,12 @@ export class UserAuthComponent implements OnInit {
     if (mode === 'visitor') {
       console.log('choose visitor mode');
       this.closeModeModal();
-      this.router.navigateByUrl('');
+      // this.router.navigateByUrl('');
+      window.history.replaceState(null, '', '');
+      this.mapService.renderTravel(TRAVELS);
       this.eventBusService.emit({type:'visitorMode'});
     } else if (mode === 'user') {
       console.log('choose user mode');
-      // this.closeModeModal();
-      // this.eventBusService.emit({type:'loginModal',payload:{show:true}});
-      // this.router.navigateByUrl('/auth/login');
       this.authStore.login();
       this._visitorMode=false;
     }
