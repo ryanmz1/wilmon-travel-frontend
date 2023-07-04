@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { WmTravelService } from './wm-travel.service';
+import { WmTravelService } from './wm-travel-api.service';
 
 describe('WmTravelService', () => {
   let service: WmTravelService;
