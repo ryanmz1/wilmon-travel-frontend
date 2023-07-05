@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { WmMapService } from "../services/wm-map.service";
 import { AuthStoreService } from "../services/auth-store.service";
 import { EventBusService } from "../services/event-bus.service";
-import { WmTravelService } from "../services/wm-travel.service";
+import { WmTravelService } from "../services/wm-travel-api.service";
 import { TRAVELS } from "../visitorTravels";
 
 @Component({

@@ -8,14 +8,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TravelMapComponent } from './travel-map/travel-map.component';
 import { UserMenuComponent } from './user-menu/user-menu.component';
-import { SpinComponent } from './shared/spin/spin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TravelMapComponent,
     UserMenuComponent,
-    SpinComponent
   ],
   imports: [
     BrowserModule,

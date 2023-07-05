@@ -4,7 +4,7 @@ import { AuthService } from '@auth0/auth0-angular';
 
 import { AuthStoreService } from "./services/auth-store.service";
 import { WmMapService } from './services/wm-map.service';
-import { WmTravelService } from "./services/wm-travel.service";
+import { WmTravelService } from "./services/wm-travel-api.service";
 import { EventBusService } from "./services/event-bus.service";
 
 @Component({
@@ -26,7 +26,9 @@ export class AppComponent {
   ngOnInit() {
     this.authService.isAuthenticated$.subscribe((isAuthenticated) => {
       if (isAuthenticated) {
-        console.log('loggedin');
+        // get user info
+        console.log('loggedin:\n');
+        this.authService.user$.subscribe((user) => console.log(user));
         this.eventBusService.emit({type:'loading'});
         this.eventBusService.emit({type:'toggleLogin', payload:{login:true}});
         this.authService.idTokenClaims$.subscribe((tokenClaims) => {

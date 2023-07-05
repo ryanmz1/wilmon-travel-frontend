@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { AuthStoreService } from 'src/app/services/auth-store.service';
 import { EventBusService } from 'src/app/services/event-bus.service';
 import { WmMapService } from 'src/app/services/wm-map.service';
-import { WmTravelService } from 'src/app/services/wm-travel.service';
+import { WmTravelService } from 'src/app/services/wm-travel-api.service';
 
 @Component({
   selector: 'app-login',
