@@ -22,6 +22,12 @@ export class SpinComponent implements OnInit {
   constructor(private eventBusService: EventBusService) { }
 
   ngOnInit(): void {
+    console.log('spin init');
+    // this.openSpinModal();
+    // setTimeout(() => {
+    // this.eventBusService.emit({type:'loading'});
+      
+    // }, 2000);
     this.eventBusService.on('loading', (payload: any) => {
       this.openSpinModal();
     });
