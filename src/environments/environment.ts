@@ -4,15 +4,18 @@
 
 import * as config from '../../auth0_config.json';
 
-const { domain, clientId, authorizationParams: { audience }, apiUri, errorPath } = config as {
+const { domain, clientId, authorizationParams: { audience, scope }, apiUri, errorPath } = config as {
   domain: string;
   clientId: string;
   authorizationParams: {
     audience?: string;
+    scope?: string;
   },
   apiUri: string;
   errorPath: string;
 };
+
+export const auth0Api = apiUri;
 
 export const environment = {
   production: false,
@@ -20,13 +23,27 @@ export const environment = {
     domain,
     clientId,
     authorizationParams: {
-      ...(audience && audience !== 'YOUR_API_IDENTIFIER' ? { audience } : null),
       redirect_uri: window.location.origin,
+      // ...(audience && audience !== 'YOUR_API_IDENTIFIER' ? { audience } : null),
+      audience,
+      // ...(scope && scope != 'WHITCH_PERMISSION' ? { scope } : null)
+      scope
     },
     errorPath,
   },
   httpInterceptor: {
-    allowedList: [`${apiUri}/*`],
+    // allowedList: [`${apiUri}/*`],
+    allowedList:  [
+      {
+        uri: `${apiUri}/*`,
+        tokenOptions: {
+          authorizationParams: {
+            audience,
+            scope
+          }
+        }
+      }
+    ]
   },
 };
 

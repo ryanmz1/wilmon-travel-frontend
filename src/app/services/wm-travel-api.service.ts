@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { api } from "../../environments/envConfig";
-import { AuthService } from "@auth0/auth0-angular";
-import { AuthStoreService } from "./auth-store.service";
+import { AuthUserService } from "./auth-user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +9,7 @@ import { AuthStoreService } from "./auth-store.service";
 export class WmTravelService {
 
   constructor(private httpClient: HttpClient,
-    private authService: AuthService,
-    private authStore: AuthStoreService) { }
+    private authUserService: AuthUserService) { }
 
   private API_URL = api.invokeUrl + '/travels';
 
@@ -24,7 +22,7 @@ export class WmTravelService {
   }
 
   private get4Api(url: string, authToken = null) {
-    const token = typeof this.authStore.authToken === 'string' ? this.authStore.authToken : '';
+    const token = typeof this.authUserService.authToken === 'string' ? this.authUserService.authToken : '';
     return this.httpClient.get(url, {
       headers: { 'Authorization':  token}
     });

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 
 import { UserAuthRoutingModule } from "./user-auth-routing.module";
 import { UserAuthComponent } from "./user-auth.component";
@@ -15,7 +14,6 @@ import { LogoutButtonComponent } from "./log-out-button.component";
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     UserAuthRoutingModule,
   ],
   exports: []

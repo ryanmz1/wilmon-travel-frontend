@@ -57,3 +57,14 @@ body {
 .pull-right {
   float: right!important;
 }
+
+.button.no-line-text {
+  background-color: transparent;
+  border-color: transparent;
+  color: #4a4a4a;
+  text-decoration: none;
+}
+
+.button.no-line-text:hover {
+  background-color: none;
+}
