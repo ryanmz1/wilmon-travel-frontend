@@ -12,6 +12,8 @@ import { FormBuilder } from '@angular/forms';
 export class UserMenuComponent implements OnInit {
   @ViewChild('settingModal', { static: true })
   private settingEl!: ElementRef;
+  @ViewChild('guestSettingModal', { static: true })
+  private guestSettingEl!: ElementRef;
   @ViewChild('saveSettingBtn', { static: true })
   private saveSettingEl!: ElementRef;
   public travelAt: string = '';
@@ -41,10 +43,18 @@ export class UserMenuComponent implements OnInit {
     console.log('user_metadata:',this.authUserService.userMetadata);
     const preferredTravelTimeAt = this.authUserService.userMetadata.preferredTravelTimeAt;
     this.travelAt = `${preferredTravelTimeAt.hourAt}:${preferredTravelTimeAt.minuteAt}`
-    this.openSettingModal();
+    this.openSetting();
   }
 
-  private openSettingModal() {
+  public openGuestSetting() {
+    this.guestSettingEl.nativeElement.classList.add('is-active');
+  }
+
+  public closeGuestSetting() {
+    this.guestSettingEl.nativeElement.classList.remove('is-active');
+  }
+
+  private openSetting() {
     this.settingEl.nativeElement.classList.add('is-active');
   }
 

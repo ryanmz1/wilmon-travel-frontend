@@ -82,39 +82,40 @@ export class AppComponent implements OnInit {
   ngAfterViewInit() {
     // user$ observable is configured so that it only starts to emit values once the isAuthenticated$ observable is true
     this.eventBusService.emit({type:'loading'});
-    this.authService.user$
-    .pipe(
-      tap((user) => this.authUserService.auth0UserId = user?.sub),
-      concatMap(() => 
-        this.authUserService.getUser()
-        // this.http.get(
-        //   encodeURI(`${auth0Api}/users/${user?.sub}`)
-        // )
-      ),
-      // map((user: any) => user.user_metadata),
-      tap((user: any) => this.authUserService.userMetadata = user.user_metadata)
-    )
-    .subscribe((user) => {
-      console.log('loggedin:\n');
-      console.log(user,'meta_data:',this.authUserService.userMetadata);
-      // this.eventBusService.emit({type:'loading'});
-      // this.eventBusService.emit({type:'toggleLogin', payload:{login:true}});
-      this.authService.idTokenClaims$.subscribe((tokenClaims) => {
-        // console.log('enter tokenClaims');
-        if (!this.authUserService.authToken) {
-          this.authUserService.authToken = tokenClaims?.__raw;
-          this.travelService.getUserTravels().subscribe((res: any)=>{
-            // console.log(data);
-            this.mapService.renderTravel(res.data);
-            this.eventBusService.emit({type:'loadingDone'});
-          });
-        }
-      });
-    });
+    // this.authService.user$
+    // .pipe(
+    //   tap((user) => this.authUserService.auth0UserId = user?.sub),
+    //   concatMap(() => 
+    //     this.authUserService.getUser()
+    //     // this.http.get(
+    //     //   encodeURI(`${auth0Api}/users/${user?.sub}`)
+    //     // )
+    //   ),
+    //   // map((user: any) => user.user_metadata),
+    //   tap((user: any) => this.authUserService.userMetadata = user.user_metadata)
+    //   // tap((user: any) => this.authUserService.user = user)
+    // )
+    // .subscribe((user) => {
+    //   console.log('loggedin:\n');
+    //   console.log(user,'meta_data:',this.authUserService.userMetadata);
+    //   // this.eventBusService.emit({type:'loading'});
+    //   // this.eventBusService.emit({type:'toggleLogin', payload:{login:true}});
+    //   this.authService.idTokenClaims$.subscribe((tokenClaims) => {
+    //     // console.log('enter tokenClaims');
+    //     if (!this.authUserService.authToken) {
+    //       this.authUserService.authToken = tokenClaims?.__raw;
+    //       this.travelService.getUserTravels().subscribe((res: any)=>{
+    //         // console.log(data);
+    //         this.mapService.renderTravel(res.data);
+    //         this.eventBusService.emit({type:'loadingDone'});
+    //       });
+    //     }
+    //   });
+    // });
 
     this.authService.isAuthenticated$.subscribe((isAuthenticated) => {
       console.log('isAuthenticated:',isAuthenticated);
-      if (!isAuthenticated) {
+      if (isAuthenticated) {
         // this.eventBusService.emit({type:'loading'});
         // this.eventBusService.emit({type:'toggleLogin', payload:{login:true}});
         // this.authService.idTokenClaims$.subscribe((tokenClaims) => {
@@ -128,7 +129,37 @@ export class AppComponent implements OnInit {
         //     });
         //   }
         // });
-      // } else {
+        this.authService.user$
+        .pipe(
+          tap((user) => this.authUserService.auth0UserId = user?.sub),
+          concatMap(() => 
+            this.authUserService.getUser()
+            // this.http.get(
+            //   encodeURI(`${auth0Api}/users/${user?.sub}`)
+            // )
+          ),
+          // map((user: any) => user.user_metadata),
+          tap((user: any) => this.authUserService.userMetadata = user.user_metadata)
+          // tap((user: any) => this.authUserService.user = user)
+        )
+        .subscribe((user) => {
+          console.log('loggedin:\n');
+          console.log(user,'meta_data:',this.authUserService.userMetadata);
+          // this.eventBusService.emit({type:'loading'});
+          // this.eventBusService.emit({type:'toggleLogin', payload:{login:true}});
+          this.authService.idTokenClaims$.subscribe((tokenClaims) => {
+            // console.log('enter tokenClaims');
+            if (!this.authUserService.authToken) {
+              this.authUserService.authToken = tokenClaims?.__raw;
+              this.travelService.getUserTravels().subscribe((res: any)=>{
+                // console.log(data);
+                this.mapService.renderTravel(res.data);
+                this.eventBusService.emit({type:'loadingDone'});
+              });
+            }
+          });
+        });
+      } else {
         console.log('no auth...');
         this.eventBusService.emit({type:'loadingDone'});
         // this.eventBusService.emit({type:'toggleLogin', payload:{login:false}});

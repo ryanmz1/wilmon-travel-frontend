@@ -11,7 +11,7 @@ import { auth0Api } from "../../environments/environment";
   providedIn: 'root'
 })
 export class AuthUserService {
-  // public VISITOR_MODE = false;
+  public GUEST_MODE = false;
   public authToken: string | undefined;
   private userId: string | undefined;
   private auth0UserApiUri: string = '';
@@ -20,6 +20,11 @@ export class AuthUserService {
     this.userId = id;
     this.auth0UserApiUri = `${auth0Api}/users/${id}`;
   }
+  // public user: any;
+  // public set auth0User(user: any) {
+  //   this.user = user;
+  //   this.auth0UserApiUri = `${auth0Api}/users/${user.id}`;
+  // }
 
   constructor(
     public auth: AuthService,

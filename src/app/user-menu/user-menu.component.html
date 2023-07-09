@@ -6,28 +6,47 @@
       </span>
       <span>GitHub</span>
     </a>
-    <a *ngIf="!(authUserService.auth.isAuthenticated$ | async)" href="javascript:void(0)" class="button is-small no-line-text pull-right" (click)="handleLogin()" #loginLink>Log In</a>
-    <div *ngIf="authUserService.auth.isAuthenticated$ | async" class="dropdown is-right is-hoverable pull-right">
-      <div class="dropdown-trigger">
-        <a class="button is-small no-line-text" aria-haspopup="true" aria-controls="dropdown-menu">
-          <figure class="image is-48x48">
-            <img class="is-rounded" src="/assets/images/user-5.jpg" alt="profile">
-          </figure>
-          <!-- <span class="icon is-small">
-            <i class="fa-solid fa-house" aria-hidden="true"></i>
-          </span>
-          <span class="icon is-small">
-            <i class="fa-solid fa-caret-down" aria-hidden="true"></i>
-          </span> -->
-        </a>
-      </div>
-      <div class="dropdown-menu profile-menu" id="dropdown-menu" role="menu">
-        <div class="dropdown-content">
-          <a href="javascript:void(0)" class="dropdown-item profile-item" (click)="handleSetting()" >Setting</a>
-          <a href="javascript:void(0)" class="dropdown-item profile-item" (click)="handleSignout()" #signoutLink>Sign Out</a>
+    <ng-template [ngIf]="!authUserService.GUEST_MODE" [ngIfElse]="guestBlock">
+      <a *ngIf="!(authUserService.auth.isAuthenticated$ | async)" href="javascript:void(0)" class="button is-small is-text no-line-text pull-right" (click)="handleLogin()" #loginLink>Log In</a>
+      <div *ngIf="authUserService.auth.isAuthenticated$ | async" class="dropdown is-right is-hoverable pull-right">
+        <div class="dropdown-trigger">
+          <a class="button is-small profile-btn no-hover" aria-haspopup="true" aria-controls="dropdown-menu">
+            <figure class="image is-48x48">
+              <img class="is-rounded" src="/assets/images/user-5.jpg" alt="profile">
+            </figure>
+            <!-- <span class="icon is-small">
+              <i class="fa-solid fa-house" aria-hidden="true"></i>
+            </span>
+            <span class="icon is-small">
+              <i class="fa-solid fa-caret-down" aria-hidden="true"></i>
+            </span> -->
+          </a>
+        </div>
+        <div class="dropdown-menu profile-menu" id="dropdown-menu" role="menu">
+          <div class="dropdown-content">
+            <a href="javascript:void(0)" class="dropdown-item profile-item" (click)="handleSetting()" >Setting</a>
+            <a href="javascript:void(0)" class="dropdown-item profile-item" (click)="handleSignout()" #signoutLink>Sign Out</a>
+          </div>
         </div>
       </div>
-    </div>
+    </ng-template>
+    <ng-template #guestBlock>
+      <div class="dropdown is-right is-hoverable pull-right">
+        <div class="dropdown-trigger">
+          <a class="button is-small profile-btn no-hover" aria-haspopup="true" aria-controls="dropdown-menu">
+            <figure class="image is-48x48">
+              <img class="is-rounded" src="/assets/images/default.jpg" alt="profile">
+            </figure>
+          </a>
+        </div>
+        <div class="dropdown-menu profile-menu" id="dropdown-menu" role="menu">
+          <div class="dropdown-content">
+            <!-- <a href="javascript:void(0)" class="dropdown-item profile-item" (click)="handleLogin()">Log In</a> -->
+            <a href="javascript:void(0)" class="dropdown-item profile-item" (click)="openGuestSetting()">Setting</a>
+          </div>
+        </div>
+      </div>
+    </ng-template>
   </div>
   <div class="panel-block panel-body">
     <!-- <div class="box">
@@ -37,14 +56,14 @@
       <li>
         Welcome! Travel around the world with your wilmon.
       </li>
-      <li>
-        Welcome! Travel around the world with your wilmon.
+      <li *ngIf="authUserService.GUEST_MODE">
+      <b>You are in guest mode now. <a (click)="handleLogin()">Log In</a> to travel your own wilmon.</b>
       </li>
     </ul>
   </div>
 </div>
 <div class="modal" #settingModal>
-  <div class="modal-background"></div>
+  <!-- <div class="modal-background"></div> -->
   <div class="modal-card">
     <header class="modal-card-head">
       <p class="modal-card-title">Preference</p>
@@ -55,7 +74,7 @@
       <!-- <div class="notification is-success is-light" style="display:none">
         Save Successfully
       </div> -->
-      <form>
+      <fieldset>
         <div class="field is-horizontal">
           <!-- <label class="label">Preferred Travel Time</label> -->
           <div class="field-label is-normal horizontal-label">
@@ -70,30 +89,54 @@
                     <option *ngFor="let option of travelTimeOptions">
                       {{option}}
                     </option>
-                    <!-- <option>Business development</option>
-                    <option>Marketing</option>
-                    <option>Sales</option>
-                    <option>18:30</option> -->
                   </select>
                 </div>
               </div>
             </div>
           </div>
-          <!-- <div class="control">
-            <div class="select">
-              <select>
-                <option>Select dropdown</option>
-                <option>With options</option>
-              </select>
-            </div>
-          </div> -->
         </div>
-      </form>
-      <!-- Content ... -->
+      </fieldset>
     </section>
     <footer class="modal-card-foot block-right">
       <button #saveSettingBtn class="button is-success" (click)="saveSetting()">Save</button>
       <button class="button" (click)="closeSetting()">Cancel</button>
+    </footer>
+  </div>
+</div>
+<div class="modal" #guestSettingModal>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Preference</p>
+      <button class="delete" aria-label="close" (click)="closeGuestSetting()"></button>
+    </header>
+    <section class="modal-card-body">
+      <div class="notification is-warning is-light">
+        Guest mode just provides limited features. <a (click)="handleLogin()"><b>Log In</b></a> to have more fun.
+      </div>
+      <fieldset disabled>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal horizontal-label">
+            <label class="label">Preferred Travel Time</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <div class="select is-rounded is-fullwidth">
+                  <select>
+                    <option *ngFor="let option of travelTimeOptions">
+                      {{option}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </section>
+    <footer class="modal-card-foot block-right">
+      <!-- <button class="button is-success" disabled>Save</button> -->
+      <button class="button" (click)="closeGuestSetting()">Cancel</button>
     </footer>
   </div>
 </div>

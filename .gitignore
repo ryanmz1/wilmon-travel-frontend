@@ -43,7 +43,7 @@ Thumbs.db
 
 # static assets
 src/assets
-visitorTravels.ts
+guestTravels.ts
 
 # secrets
 /src/environments/envConfig.ts

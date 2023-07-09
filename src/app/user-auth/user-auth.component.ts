@@ -4,7 +4,7 @@ import { WmMapService } from "../services/wm-map.service";
 import { AuthUserService } from "../services/auth-user.service";
 import { EventBusService } from "../services/event-bus.service";
 import { WmTravelService } from "../services/wm-travel-api.service";
-import { TRAVELS } from "../visitorTravels";
+import { TRAVELS } from "../guestTravels";
 
 @Component({
   selector: 'app-user-auth',
@@ -14,7 +14,7 @@ import { TRAVELS } from "../visitorTravels";
 export class UserAuthComponent implements OnInit {
 
   constructor(private mapService: WmMapService,
-    private authStore: AuthUserService,
+    private authUserService: AuthUserService,
     private eventBusService: EventBusService,
     private travelService: WmTravelService,
     private router: Router) { }
@@ -26,7 +26,7 @@ export class UserAuthComponent implements OnInit {
   @Output()
   private modeNotifier = new EventEmitter<any>();
 
-  private _visitorMode=false;
+  // private _visitorMode=false;
 
   ngOnInit(): void {
     console.log('user-auth init...');
@@ -42,18 +42,18 @@ export class UserAuthComponent implements OnInit {
   }
 
   public handleMode(mode: string) {
-    if (mode === 'visitor') {
-      console.log('choose visitor mode');
+    if (mode === 'guest') {
+      console.log('choose guest mode');
       this.closeModeModal();
       // this.router.navigateByUrl('');
+      this.authUserService.GUEST_MODE = true;
       window.history.replaceState(null, '', '');
       this.mapService.renderTravel(TRAVELS);
-      this.eventBusService.emit({type:'visitorMode'});
+      this.eventBusService.emit({type:'guestMode'});
     } else if (mode === 'user') {
       console.log('choose user mode');
-      this.authStore.login();
-      this._visitorMode=false;
+      this.authUserService.login();
+      this.authUserService.GUEST_MODE = false;
     }
   }
-  
 }
