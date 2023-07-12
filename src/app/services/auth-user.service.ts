@@ -66,11 +66,17 @@ export class AuthUserService {
   public updateUserMetadata(meta_data: any) {
     return this.httpClient.patch(
       encodeURI(this.auth0UserApiUri), {
-        "user_metadata": meta_data
+        'user_metadata': meta_data
       }
     ).pipe(tap((user: any) => {
       console.log(user,'from callback');
       this.userMetadata = user.user_metadata;
     }));
+  }
+
+  public updateUserPreferences(data: any) {
+    return this.updateUserMetadata({
+      'preferences': data
+    });
   }
 }

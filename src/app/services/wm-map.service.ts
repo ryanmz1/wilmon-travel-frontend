@@ -5,13 +5,16 @@ import Graphic from "@arcgis/core/Graphic";
 import TextSymbol from "@arcgis/core/symbols/TextSymbol";
 import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol";
 import Point from "@arcgis/core/geometry/Point";
+import { EventBusService } from "./event-bus.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class WmMapService {
 
-  constructor() { }
+  constructor(
+    private messageService: EventBusService
+  ) { }
 
   public view!: MapView;
   private _map!: Map;
@@ -59,6 +62,12 @@ export class WmMapService {
           longitude: element.coordinates.longitude,
         });
         this.setLocation(element, true);
+        this.messageService.emit({
+          type: 'userMessage',
+          payload: {
+            address: element.address
+          }
+        });
       } else {
         this.setLocation(element);
       }
@@ -67,7 +76,6 @@ export class WmMapService {
 
   public setLocation(location: any, latest = false) {
     const { coordinates, imageUrl, address } = location;
-    // console.log('iamgeUrl:', iamgeUrl);
     const point = new Point({
       longitude: coordinates.longitude,
       latitude: coordinates.latitude,
@@ -75,6 +83,23 @@ export class WmMapService {
     const pinGraphic = new Graphic({
       geometry: point,
       symbol: this._pinSymbol,
+      popupTemplate: {
+        title: 'Travel on ' + '2019-03-09',
+        content: [
+          {
+            type: 'media',
+            mediaInfos: [
+              {
+                title: address,
+                type: 'image',
+                value: {
+                  sourceURL: imageUrl,
+                },
+              }
+            ]
+          }
+        ]
+      }
     });
     const wilmonGraphic = new Graphic({
       geometry: point,

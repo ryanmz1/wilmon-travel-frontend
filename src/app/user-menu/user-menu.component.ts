@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { Router } from "@angular/router";
+import { FormBuilder } from '@angular/forms';
 import { EventBusService } from "../services/event-bus.service";
 import { AuthUserService } from '../services/auth-user.service';
-import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-user-menu',
@@ -16,6 +16,8 @@ export class UserMenuComponent implements OnInit {
   private guestSettingEl!: ElementRef;
   @ViewChild('saveSettingBtn', { static: true })
   private saveSettingEl!: ElementRef;
+  @ViewChild('userMessages', { static: true })
+  private messageEl!: ElementRef;
   public travelAt: string = '';
   public travelTimeOptions: Array<string> = [
     '0:30', '1:30', '2:30', '3:30', '4:30', '5:30', '6:30', '7:30', '8:30', '9:30',
@@ -23,13 +25,25 @@ export class UserMenuComponent implements OnInit {
     '19:30', '20:30', '21:30', '22:30', '23:30'
   ];
   
-  constructor(private eventBusService: EventBusService,
+  constructor(private messageService: EventBusService,
     private render: Renderer2,
     public authUserService: AuthUserService,
     private router: Router,
     private formBuilder: FormBuilder) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.messageService.on('userMessage', (msg: any) => {
+      const { address } = msg;
+      const liEl = this.render.createElement('li');
+      const liTxt = this.render.createText(`Your wilmon now is traveling at `);
+      const bEl = this.render.createElement('b');
+      const bTxt = this.render.createText(`${address}`);
+      this.render.appendChild(bEl, bTxt);
+      this.render.appendChild(liEl, liTxt);
+      this.render.appendChild(liEl, bEl);
+      this.render.appendChild(this.messageEl.nativeElement, liEl);
+    })
+  }
 
   public handleLogin() {
     this.authUserService.login();
@@ -41,8 +55,8 @@ export class UserMenuComponent implements OnInit {
 
   public handleSetting() {
     console.log('user_metadata:',this.authUserService.userMetadata);
-    const preferredTravelTimeAt = this.authUserService.userMetadata.preferredTravelTimeAt;
-    this.travelAt = `${preferredTravelTimeAt.hourAt}:${preferredTravelTimeAt.minuteAt}`
+    const preferredTravelTimeAt = this.authUserService.userMetadata.preferences.travelTimeAt;
+    this.travelAt = `${preferredTravelTimeAt.hour - preferredTravelTimeAt._timezoneOffset}:${preferredTravelTimeAt.minute}`
     this.openSetting();
   }
 
@@ -65,13 +79,15 @@ export class UserMenuComponent implements OnInit {
   public saveSetting() {
     this.render.addClass(this.saveSettingEl.nativeElement, 'is-loading');
     console.log(this.travelAt);
-    const timeArr = this.travelAt.split(':');
-    const hourAt = timeArr[0];
-    const minuteAt = timeArr[1];
-    this.authUserService.updateUserMetadata({
-      'preferredTravelTimeAt': {
-        'hourAt': hourAt,
-        'minuteAt': minuteAt
+    const hourMinute = this.travelAt.split(':');
+    const hour = Number(hourMinute[0]);
+    const minute = Number(hourMinute[1]);
+    const timezoneOffset = new Date().getTimezoneOffset() / 60;
+    this.authUserService.updateUserPreferences({
+      'travelTimeAt': {
+        'hour': hour + timezoneOffset,
+        'minute': minute,
+        '_timezoneOffset': timezoneOffset
       }
     }).subscribe((user) => {
       console.log('meta_data updated');
