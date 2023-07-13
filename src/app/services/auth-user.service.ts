@@ -69,7 +69,7 @@ export class AuthUserService {
         'user_metadata': meta_data
       }
     ).pipe(tap((user: any) => {
-      console.log(user,'from callback');
+      console.log('updateUserMetadata from auth-user-serv');
       this.userMetadata = user.user_metadata;
     }));
   }

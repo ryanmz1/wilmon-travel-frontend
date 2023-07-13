@@ -139,12 +139,17 @@ export class AppComponent implements OnInit {
             // )
           ),
           // map((user: any) => user.user_metadata),
-          tap((user: any) => this.authUserService.userMetadata = user.user_metadata)
+          tap((user: any) => {
+            this.authUserService.userMetadata = user.user_metadata;
+            if (user.logins_count == 1 && !user.user_metadata?.preferences?.travelTimeAt) {
+              this.eventBusService.emit({type: 'userMessage', payload: { defaultTravelTime: true }});
+            }
+          })
           // tap((user: any) => this.authUserService.user = user)
         )
         .subscribe((user) => {
-          console.log('loggedin:\n');
-          console.log(user,'meta_data:',this.authUserService.userMetadata);
+          console.log('loggedin:\n',user);
+          // console.log(user,'meta_data:',this.authUserService.userMetadata);
           // this.eventBusService.emit({type:'loading'});
           // this.eventBusService.emit({type:'toggleLogin', payload:{login:true}});
           this.authService.idTokenClaims$.subscribe((tokenClaims) => {
